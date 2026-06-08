@@ -16,10 +16,28 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data }) => {
     setCurrentIndex((prev) => (prev === 0 ? data.length - 1 : prev - 1));
   };
 
+  const updateFrameMotion = (event: React.PointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * -10;
+
+    event.currentTarget.style.setProperty('--tilt-x', `${y}deg`);
+    event.currentTarget.style.setProperty('--tilt-y', `${x}deg`);
+  };
+
+  const resetFrameMotion = (event: React.PointerEvent<HTMLDivElement>) => {
+    event.currentTarget.style.setProperty('--tilt-x', '0deg');
+    event.currentTarget.style.setProperty('--tilt-y', '0deg');
+  };
+
   return (
-    <div className="w-full flex flex-col items-center justify-center py-6">
+    <div className="carousel-shell w-full flex flex-col items-center justify-center py-6">
       {/* Phone Mockup Frame Container */}
-      <div className="relative mx-auto border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+      <div
+        className="phone-frame relative mx-auto border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl"
+        onPointerMove={updateFrameMotion}
+        onPointerLeave={resetFrameMotion}
+      >
         {/* Phone Notch/Buttons (Design elements) */}
         <div className="w-[148px] h-[18px] bg-gray-800 top-0 left-1/2 -translate-x-1/2 absolute rounded-b-xl z-20"></div>
         <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
@@ -28,15 +46,16 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data }) => {
         {/* Screen */}
         <div className="rounded-[2rem] overflow-hidden w-full h-full bg-black flex items-center justify-center">
           <img 
+            key={data[currentIndex].id}
             src={data[currentIndex].imageUrl} 
             alt={data[currentIndex].title}
-            className="w-full h-full object-cover"
+            className="carousel-screen-image w-full h-full object-cover"
           />
         </div>
 
         {/* Buttons */}
-        <button onClick={prevSlide} className="absolute -left-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30">❮</button>
-        <button onClick={nextSlide} className="absolute -right-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30">❯</button>
+        <button onClick={prevSlide} className="carousel-nav absolute -left-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30" aria-label="Previous mockup">{'<'}</button>
+        <button onClick={nextSlide} className="carousel-nav absolute -right-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30" aria-label="Next mockup">{'>'}</button>
       </div>
 
       {/* Info */}
@@ -46,7 +65,7 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data }) => {
         
         <div className="flex justify-center gap-2 mt-4">
           {data.map((_, index) => (
-            <button key={index} onClick={() => setCurrentIndex(index)} className={`h-2 rounded-full transition-all ${currentIndex === index ? 'bg-purple-500 w-6' : 'bg-gray-700 w-2'}`} />
+            <button key={index} onClick={() => setCurrentIndex(index)} className={`carousel-dot h-2 rounded-full transition-all ${currentIndex === index ? 'bg-purple-500 w-6' : 'bg-gray-700 w-2'}`} aria-label={`Show ${data[index].title}`} />
           ))}
         </div>
       </div>

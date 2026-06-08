@@ -4,6 +4,22 @@ export interface MockupItem {
   imageUrl: string;
   description?: string;
 }
+
+// Sa loob ng src/data/mockupData.ts
+export const weddingScreens: ScreenItem[] = [
+  { src: '/src/assets/ojt/ojt.jpg', title: 'Wedding Screen 1' },
+];
+
+// Gawin itong compatible sa MockupItem (dapat may 'id', 'title', 'imageUrl')
+export const weddingMockups: MockupItem[] = [
+  { 
+    id: 1, 
+    title: 'MObile Developer Internship', 
+    imageUrl: '/src/assets/ojt/ojt.jpg', 
+    description: 'POS' 
+  },
+];
+
 export const furniViewScreens: ScreenItem[] = [
   { src: "/src/assets/furni/furni-1.jpg", title: "Landing Page" },
   { src: "/src/assets/furni/furni-2.jpg", title: "Category Navigation" },
