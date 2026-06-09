@@ -540,6 +540,21 @@ body {
 }
 
 @media (max-width: 640px) {
+  .motion-reveal,
+  .motion-reveal.is-visible,
+  .portrait-float,
+  .portrait-float.is-visible {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .project-card:hover,
+  .skill-card:hover,
+  .project-card:hover .project-copy > * {
+    transform: none;
+  }
+
   .carousel-nav {
     top: auto;
     bottom: -58px;

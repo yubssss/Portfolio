@@ -55,6 +55,36 @@ const CodeIcon = () => (
   </svg>
 );
 
+const HomeIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="m3 10.5 9-7 9 7" />
+    <path d="M5 10v10h14V10" />
+    <path d="M9 20v-6h6v6" />
+  </svg>
+);
+
+const ProjectsIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="3" y="4" width="18" height="14" rx="2" />
+    <path d="M8 22h8" />
+    <path d="M12 18v4" />
+  </svg>
+);
+
+const AboutIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 21a8 8 0 0 1 16 0" />
+  </svg>
+);
+
+const ContactIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
 type NavTab = 'home' | 'projects' | 'about' | 'contact';
 type ProjectCategory = 'all' | 'mobile' | 'web';
 type TechTag =
@@ -211,7 +241,7 @@ function App() {
       </Helmet>
 
       <div
-        className="site-shell bg-[#0b0b0c] text-white min-h-screen font-sans w-full max-w-full px-4 sm:px-12 md:px-20 lg:px-32 pt-24 pb-12 flex flex-col gap-12 transition-all duration-300"
+        className="site-shell bg-[#0b0b0c] text-white min-h-screen font-sans w-full max-w-full overflow-x-hidden px-4 sm:px-8 md:px-16 lg:px-32 pt-24 pb-12 flex flex-col gap-12 transition-all duration-300"
         onPointerMove={updatePointerGlow}
         style={{ '--scroll-depth': `${Math.min(scrollY / 900, 1)}` } as CSSProperties}
       >
@@ -239,22 +269,22 @@ function App() {
         </button>
 
         {/* Navigation Tabs - Fixed */}
-        <nav className="fixed top-4 left-0 right-0 z-30 flex justify-center pointer-events-none">
+        <nav className="fixed top-4 left-0 right-0 z-30 flex justify-center px-4 pointer-events-none">
           <div className={`flex justify-center items-center gap-1 p-1.5 rounded-2xl border transition-all duration-300 shadow-2xl mx-auto max-w-fit pointer-events-auto ${
             theme === 'dark' 
               ? 'border-white/10 bg-black/80 backdrop-blur-xl' 
               : 'border-gray-200/30 bg-white/80 backdrop-blur-xl shadow-gray-500/10'
           }`}>
             {[
-              { id: 'home', label: 'Home', icon: '🏠' },
-              { id: 'projects', label: 'Projects', icon: '📱' },
-              { id: 'about', label: 'About', icon: '👤' },
-              { id: 'contact', label: 'Contact', icon: '📞' }
+              { id: 'home', label: 'Home', icon: <HomeIcon /> },
+              { id: 'projects', label: 'Projects', icon: <ProjectsIcon /> },
+              { id: 'about', label: 'About', icon: <AboutIcon /> },
+              { id: 'contact', label: 'Contact', icon: <ContactIcon /> }
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleNavClick(tab.id as NavTab)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 btn-active-scale ${
+                className={`px-3 py-2.5 md:px-5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 btn-active-scale ${
                   activeNavTab === tab.id
                     ? theme === 'dark'
                       ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30'
@@ -264,8 +294,8 @@ function App() {
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
                 }`}
               >
-                <span>{tab.icon}</span>
-                <span className="hidden sm:inline">{tab.label}</span>
+                <span aria-hidden="true" className="shrink-0">{tab.icon}</span>
+                <span className="hidden md:inline">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -276,8 +306,8 @@ function App() {
           {/* --- HOME SECTION --- */}
           {activeNavTab === 'home' && (
             <div className="motion-reveal reveal-rise">
-              <header className="hero-panel w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-12 p-8 md:p-12 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-purple-500/20">
-                <div className="flex-1 text-left space-y-6">
+              <header className="hero-panel w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12 p-5 sm:p-8 md:p-12 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-purple-500/20">
+                <div className="w-full flex-1 text-left space-y-6">
                   <div className="motion-reveal reveal-blur inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono font-medium rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 transition-all duration-300 hover:bg-purple-500/20" style={revealDelay(100)}>
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
@@ -287,7 +317,7 @@ function App() {
                   </div>
                   
                   <div className="motion-reveal reveal-rise space-y-3" style={revealDelay(180)}>
-                    <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
                       Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-400 to-indigo-400">Mar James Cayube</span>.
                     </h1>
                     <p className="text-lg md:text-xl font-medium text-slate-400 tracking-wide">
@@ -384,33 +414,33 @@ function App() {
           {/* --- PROJECTS SECTION --- */}
           {activeNavTab === 'projects' && (
             <div className="motion-reveal reveal-rise">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 px-2">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 px-0 sm:px-2">
                 <div className="text-left">
                   <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Engineered Architectural Solutions</h2>
                   <p className="text-base text-slate-400 mt-2">Production-grade applications and systems built from source files to scalable deployments.</p>
                 </div>
                 
-                <div className="flex gap-1 p-1 bg-black/50 border border-white/5 rounded-xl backdrop-blur-md self-start sm:self-auto shrink-0">
+                <div className="flex w-full sm:w-auto gap-1 p-1 bg-black/50 border border-white/5 rounded-xl backdrop-blur-md self-start sm:self-auto shrink-0">
                   {(['all', 'mobile', 'web'] as const).map((tab) => (
-                    <button key={tab} onClick={() => setActiveProjectTab(tab)} className={`px-4 py-2 text-xs font-mono font-medium rounded-lg capitalize transition-all duration-300 btn-active-scale ${activeProjectTab === tab ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                    <button key={tab} onClick={() => setActiveProjectTab(tab)} className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 text-xs font-mono font-medium rounded-lg capitalize transition-all duration-300 btn-active-scale ${activeProjectTab === tab ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
                       {tab === 'all' ? 'All Projects' : `${tab} Apps`}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="motion-reveal reveal-rise tech-filter-bar flex flex-wrap items-center gap-2 px-2 mt-6" style={revealDelay(80)}>
-                <span className="mr-1 text-[11px] font-mono uppercase tracking-widest text-slate-500">Tech filters</span>
+              <div className="motion-reveal reveal-rise tech-filter-bar flex flex-wrap md:flex-nowrap items-center gap-2 px-0 sm:px-2 mt-6 md:overflow-x-auto" style={revealDelay(80)}>
+                <span className="w-full md:w-auto md:mr-1 shrink-0 text-[11px] font-mono uppercase tracking-widest text-slate-500">Tech filters</span>
                 {allTechTags.map((tag) => {
                   const isSelected = selectedTechTags.includes(tag);
                   return (
-                    <button key={tag} type="button" onClick={() => toggleTechTag(tag)} className={`btn-active-scale rounded-full border px-3 py-1.5 text-xs font-mono transition-all duration-300 ${isSelected ? 'border-purple-400/60 bg-purple-500/20 text-white shadow-lg shadow-purple-500/10' : 'border-white/10 bg-white/5 text-slate-400 hover:border-purple-500/30 hover:bg-purple-500/10 hover:text-white'}`} aria-pressed={isSelected}>
+                    <button key={tag} type="button" onClick={() => toggleTechTag(tag)} className={`btn-active-scale shrink-0 rounded-full border px-3 py-1.5 text-xs font-mono transition-all duration-300 ${isSelected ? 'border-purple-400/60 bg-purple-500/20 text-white shadow-lg shadow-purple-500/10' : 'border-white/10 bg-white/5 text-slate-400 hover:border-purple-500/30 hover:bg-purple-500/10 hover:text-white'}`} aria-pressed={isSelected}>
                       {tag}
                     </button>
                   );
                 })}
                 {selectedTechTags.length > 0 && (
-                  <button type="button" onClick={() => setSelectedTechTags([])} className="btn-active-scale rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-xs font-mono text-slate-500 transition-all duration-300 hover:border-white/20 hover:text-white">
+                  <button type="button" onClick={() => setSelectedTechTags([])} className="btn-active-scale shrink-0 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-xs font-mono text-slate-500 transition-all duration-300 hover:border-white/20 hover:text-white">
                     Clear filters
                   </button>
                 )}
@@ -419,10 +449,10 @@ function App() {
               <div className="flex flex-col gap-10 w-full mt-6">
                 {showEcoTrack && (
                   <div className="motion-reveal reveal-slide-left project-card group flex flex-col lg:flex-row items-stretch rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)]">
-                    <div className="lg:w-1/2 min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-4">
+                    <div className="w-full lg:w-1/2 min-h-[360px] sm:min-h-[420px] lg:min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-3 sm:p-4">
                       <MockupCarousel data={ecoTrackMockups} />
                     </div>
-                    <div className="project-copy flex-1 p-8 text-left flex flex-col justify-between space-y-6">
+                    <div className="project-copy w-full flex-1 p-5 sm:p-8 text-left flex flex-col justify-between space-y-6">
                       <div className="space-y-4">
                         <div className="flex justify-between items-center flex-wrap gap-2">
                           <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-md">Integrated Full-Stack Ecosystem</span>
@@ -445,10 +475,10 @@ function App() {
 
                 {showFurniView && (
                   <div className="motion-reveal reveal-slide-right project-card group flex flex-col lg:flex-row-reverse items-stretch rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)]">
-                    <div className="lg:w-1/2 min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-l border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-4">
+                    <div className="w-full lg:w-1/2 min-h-[360px] sm:min-h-[420px] lg:min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-l border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-3 sm:p-4">
                       <MockupCarousel data={furniViewMockups} />
                     </div>
-                    <div className="project-copy flex-1 p-8 text-left flex flex-col justify-between space-y-6">
+                    <div className="project-copy w-full flex-1 p-5 sm:p-8 text-left flex flex-col justify-between space-y-6">
                       <div className="space-y-4">
                         <div className="flex justify-between items-center flex-wrap gap-2">
                           <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-md">Mobile AR Application</span>
@@ -472,10 +502,10 @@ function App() {
                 {/* WEB PROJECTS SECTION */}
                 {showWebProjects && (
                   <div className="motion-reveal reveal-slide-right project-card group flex flex-col lg:flex-row-reverse items-stretch rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)]">
-                    <div className="lg:w-1/2 min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-l border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-4">
+                    <div className="w-full lg:w-1/2 min-h-[320px] sm:min-h-[380px] lg:min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-l border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-3 sm:p-4">
                       <MockupCarousel data={ecoTrackWebMockups} type="web" />
                     </div>
-                    <div className="project-copy flex-1 p-8 text-left flex flex-col justify-between space-y-6">
+                    <div className="project-copy w-full flex-1 p-5 sm:p-8 text-left flex flex-col justify-between space-y-6">
                       <div className="space-y-4">
                         <div className="flex justify-between items-center flex-wrap gap-2">
                           <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-md">Enterprise Web Dashboard</span>
@@ -498,10 +528,10 @@ function App() {
 
                 {showWeddingModule && (
                   <div className="motion-reveal reveal-slide-left project-card group flex flex-col lg:flex-row items-stretch rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)]">
-                    <div className="lg:w-1/2 min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-4">
+                    <div className="w-full lg:w-1/2 min-h-[360px] sm:min-h-[420px] lg:min-h-[450px] bg-zinc-950 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden shrink-0 group/img flex items-center justify-center p-3 sm:p-4">
                       <MockupCarousel data={weddingMockups} />
                     </div>
-                    <div className="project-copy flex-1 p-8 text-left flex flex-col justify-between space-y-6">
+                    <div className="project-copy w-full flex-1 p-5 sm:p-8 text-left flex flex-col justify-between space-y-6">
                       <div className="space-y-4">
                         <div className="flex justify-between items-center flex-wrap gap-2">
                           <span className="text-[10px] font-mono tracking-widest uppercase px-3 py-1 bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20 rounded-md">Mobile Application Module</span>
@@ -540,7 +570,7 @@ function App() {
               </div>
 
               {/* Career Objective */}
-              <div className="p-8 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl">
+              <div className="p-5 sm:p-8 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl">
                 <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">🎯 Career Objective</h3>
                 <p className="text-slate-300 leading-relaxed">
                   Motivated and detail-oriented IT Graduate specializing in Mobile Application Development. Equipped with solid, hands-on experience in building cross-platform applications using Flutter and React Native from a 500-hour intensive industry internship. Proven ability in translating complex UI/UX designs into functional code, managing RESTful API integrations, and implementing modern state management. Passionate about engineering scalable, user-friendly solutions in a fast-paced development team.

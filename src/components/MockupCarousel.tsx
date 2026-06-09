@@ -36,7 +36,7 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
   // Web/Browser mockup renderer
   if (type === 'web') {
     return (
-      <div className="carousel-shell w-full flex flex-col items-center justify-center py-6">
+      <div className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6">
         {/* Browser Frame Container */}
         <div className="browser-frame relative w-full max-w-4xl mx-auto">
           {/* Browser Chrome */}
@@ -47,8 +47,8 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
-              <div className="flex-1 mx-4">
-                <div className="bg-gray-800 rounded-lg px-3 py-1.5 text-xs text-gray-400 font-mono text-center">
+              <div className="min-w-0 flex-1 mx-2 sm:mx-4">
+                <div className="truncate bg-gray-800 rounded-lg px-3 py-1.5 text-xs text-gray-400 font-mono text-center">
                   localhost:3000/dashboard
                 </div>
               </div>
@@ -86,7 +86,7 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
         </div>
 
         {/* Info Section */}
-        <div className="text-center mt-6 max-w-sm px-4">
+        <div className="text-center mt-6 w-full max-w-sm px-4">
           <h4 className="text-purple-400 font-semibold text-lg">{data[currentIndex].title}</h4>
           <p className="text-gray-400 text-sm mt-1 min-h-[40px]">{data[currentIndex].description}</p>
           
@@ -107,18 +107,18 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
 
   // Mobile mockup renderer (original)
   return (
-    <div className="carousel-shell w-full flex flex-col items-center justify-center py-6">
+    <div className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6">
       {/* Phone Mockup Frame Container */}
       <div
-        className="phone-frame relative mx-auto border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl"
+        className="phone-frame relative mx-auto border-gray-800 bg-gray-800 border-[10px] sm:border-[14px] rounded-[2rem] sm:rounded-[2.5rem] h-[500px] w-[250px] max-h-[68vh] max-w-[calc(100vw-4rem)] sm:h-[600px] sm:w-[300px] shadow-xl"
         onPointerMove={updateFrameMotion}
         onPointerLeave={resetFrameMotion}
         style={{ transform: 'rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))' }}
       >
         {/* Phone Notch/Buttons */}
-        <div className="w-[148px] h-[18px] bg-gray-800 top-0 left-1/2 -translate-x-1/2 absolute rounded-b-xl z-20"></div>
-        <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-        <div className="h-[46px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+        <div className="w-[118px] sm:w-[148px] h-[16px] sm:h-[18px] bg-gray-800 top-0 left-1/2 -translate-x-1/2 absolute rounded-b-xl z-20"></div>
+        <div className="hidden sm:block h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+        <div className="hidden sm:block h-[46px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
         
         {/* Screen */}
         <div className="rounded-[2rem] overflow-hidden w-full h-full bg-black flex items-center justify-center">
@@ -131,12 +131,12 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
         </div>
 
         {/* Navigation Buttons */}
-        <button onClick={prevSlide} className="carousel-nav absolute -left-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30" aria-label="Previous mockup">{'<'}</button>
-        <button onClick={nextSlide} className="carousel-nav absolute -right-12 top-1/2 -translate-y-1/2 bg-purple-600/20 hover:bg-purple-600/40 p-3 rounded-full text-white z-30" aria-label="Next mockup">{'>'}</button>
+        <button onClick={prevSlide} className="carousel-nav absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 bg-purple-600/30 hover:bg-purple-600/50 p-2.5 sm:p-3 rounded-full text-white z-30 backdrop-blur-sm" aria-label="Previous mockup">{'<'}</button>
+        <button onClick={nextSlide} className="carousel-nav absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 bg-purple-600/30 hover:bg-purple-600/50 p-2.5 sm:p-3 rounded-full text-white z-30 backdrop-blur-sm" aria-label="Next mockup">{'>'}</button>
       </div>
 
       {/* Info Section */}
-      <div className="text-center mt-6 max-w-sm px-4">
+      <div className="text-center mt-6 w-full max-w-sm px-4">
         <h4 className="text-purple-400 font-semibold text-lg">{data[currentIndex].title}</h4>
         <p className="text-gray-400 text-sm mt-1 min-h-[40px]">{data[currentIndex].description}</p>
         
