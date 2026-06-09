@@ -14,8 +14,8 @@ import {
   weddingMockups, 
   weddingScreens 
 } from './data/mockupData';
-import profileImage from '../assets/ecotrack/profile.jpg';
-
+// Profile image from public folder
+const profileImage = '/Portfolio/assets/ecotrack/profile.jpg';
 // Import icons as components for better performance
 const GithubIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
