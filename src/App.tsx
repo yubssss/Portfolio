@@ -14,7 +14,7 @@ import {
   weddingMockups, 
   weddingScreens 
 } from './data/mockupData';
-import profileImage from './assets/ecotrack/profile.jpg';
+import profileImage from '../assets/ecotrack/profile.jpg';
 
 // Import icons as components for better performance
 const GithubIcon = () => (
