@@ -14,8 +14,7 @@ import {
   weddingMockups, 
   weddingScreens 
 } from './data/mockupData';
-import profileImage from './assets/ecotrack/profile.jpg';
-
+<img src="/assets/ecotrack/profile.jpg" alt="Profile" />
 // Import icons as components for better performance
 const GithubIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -355,7 +354,7 @@ function App() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-500 rounded-3xl opacity-20 blur-2xl transition-all duration-700 group-hover:opacity-40 group-hover:scale-110"></div>
                   <div className="w-full h-full rounded-3xl border border-white/10 bg-zinc-950 overflow-hidden relative z-10 transition-all duration-500 group-hover:scale-[1.03] shadow-2xl group-hover:border-purple-500/40 flex items-center justify-center">
                     {!imageError ? (
-                      <img src={profileImage} alt="Mar James Cayube - Mobile Developer Portfolio" className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-500" onError={() => setImageError(true)} loading="eager" />
+                      <img src="/assets/ecotrack/profile.jpg" alt="Mar James Cayube - Mobile Developer Portfolio" className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-500" onError={() => setImageError(true)} loading="eager" />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-5xl text-purple-400 font-sans font-bold bg-zinc-950 select-none">MJC</div>
                     )}
