@@ -10,6 +10,84 @@ export interface ScreenItem {
   title: string;
 }
 
+// Add this to your existing mockupData.tsx file
+
+// ─── AI SCANNER (AI PANTRY SCANNER) ───────────────────────────────────────────
+export const aiScannerScreens: ScreenItem[] = [
+  { src: '/Portfolio/assets/recipe/1.jpg', title: 'Welcome to AI Pantry Scanner' },
+  { src: '/Portfolio/assets/recipe/2.jpg', title: 'Gemini Recipe Intelligence' },
+  { src: '/Portfolio/assets/recipe/3.jpg', title: 'Saved for Offline Cooking' },
+  { src: '/Portfolio/assets/recipe/4.jpg', title: 'Scan Your Pantry - Camera Interface' },
+  { src: '/Portfolio/assets/recipe/5.jpg', title: 'Analyzing Your Ingredients' },
+  { src: '/Portfolio/assets/recipe/6.jpg', title: 'Recipe Analysis Result' },
+  { src: '/Portfolio/assets/recipe/7.jpg', title: 'Full Recipe View - Ingredients & Instructions' },
+  { src: '/Portfolio/assets/recipe/8.jpg', title: 'Pantry History - Recipe Card' },
+  { src: '/Portfolio/assets/recipe/9.jpg', title: 'Pantry History - Expanded View' },
+  { src: '/Portfolio/assets/recipe/10.jpg', title: 'Profile & Settings' },
+];
+
+export const aiScannerMockups: MockupItem[] = [
+  { 
+    id: 1, 
+    title: 'Welcome to AI Pantry Scanner', 
+    imageUrl: '/Portfolio/assets/recipe/1.jpg', 
+    description: 'Welcome screen introducing the AI Pantry Scanner - scan ingredients and turn what you have into practical recipes.' 
+  },
+  { 
+    id: 2, 
+    title: 'Gemini Recipe Intelligence', 
+    imageUrl: '/Portfolio/assets/recipe/2.jpg', 
+    description: 'Powered by Google Gemini AI - photos become structured ingredients, cooking time, nutrition estimates, and guided steps.' 
+  },
+  { 
+    id: 3, 
+    title: 'Saved for Offline Cooking', 
+    imageUrl: '/Portfolio/assets/recipe/3.jpg', 
+    description: 'Scan history and generated recipes stay available locally for offline access.' 
+  },
+  { 
+    id: 4, 
+    title: 'Scan Your Pantry', 
+    imageUrl: '/Portfolio/assets/recipe/4.jpg', 
+    description: 'Camera interface with options to Take Photo or Choose from Gallery for ingredient scanning.' 
+  },
+  { 
+    id: 5, 
+    title: 'Analyzing Your Ingredients', 
+    imageUrl: '/Portfolio/assets/recipe/5.jpg', 
+    description: 'Real-time AI analysis of detected ingredients with loading state.' 
+  },
+  { 
+    id: 6, 
+    title: 'Recipe Analysis Result', 
+    imageUrl: '/Portfolio/assets/recipe/6.jpg', 
+    description: 'AI-generated recipe recommendation based on scanned ingredients - Spicy Tuna and Anchovy Spaghetti.' 
+  },
+  { 
+    id: 7, 
+    title: 'Full Recipe View', 
+    imageUrl: '/Portfolio/assets/recipe/7.jpg', 
+    description: 'Complete recipe details including ingredients list, cooking instructions, prep time, servings, and calories.' 
+  },
+  { 
+    id: 8, 
+    title: 'Pantry History - Recipe Card', 
+    imageUrl: '/Portfolio/assets/recipe/8.jpg', 
+    description: 'History view showing saved recipes with summary cards containing time, servings, calories, and difficulty.' 
+  },
+  { 
+    id: 9, 
+    title: 'Pantry History - Expanded View', 
+    imageUrl: '/Portfolio/assets/recipe/9.jpg', 
+    description: 'Expanded recipe history showing full ingredients list and detected items.' 
+  },
+  { 
+    id: 10, 
+    title: 'Profile & Settings', 
+    imageUrl: '/Portfolio/assets/recipe/10.jpg', 
+    description: 'User profile management with dark mode, voice guide, data management, clear history, and offline storage options.' 
+  },
+];
 // ─── WEDDING / OJT ───────────────────────────────────────────────────────────
 export const weddingScreens: ScreenItem[] = [
   { src: '/Portfolio/assets/ojt/ojt.jpg', title: 'Mobile Developer Internship - Event Check-In System' },
