@@ -116,11 +116,24 @@ const ecoTrackTech: TechTag[] = ['React', 'TypeScript', 'Vite', 'Supabase'];
 const furniViewTech: TechTag[] = ['React Native', 'AR'];
 const weddingTech: TechTag[] = ['Flutter', 'Dart', 'Postman', 'Figma'];
 const webTech: TechTag[] = ['React', 'TypeScript', 'Vite', 'Supabase'];
+const resumePath = '/Portfolio/resume/Marjames_Cayube_RESUME.pdf';
+
+const projectSummaries = [
+  { label: 'Production apps', value: '3+', detail: 'Mobile, AR, and dashboard builds' },
+  { label: 'Live screens', value: '20', detail: 'High-fidelity preview states' },
+  { label: 'Internship', value: '500+', detail: 'Industry implementation hours' },
+  { label: 'Focus', value: 'Secure UX', detail: 'Validated forms and protected links' },
+];
 
 function App() {
   const [isWebGalleryOpen, setIsWebGalleryOpen] = useState(false);
   const [currentWebIndex, setCurrentWebIndex] = useState(0);
-  const [activeNavTab, setActiveNavTab] = useState<NavTab>('home');
+  const [activeNavTab, setActiveNavTab] = useState<NavTab>(() => {
+    const savedTab = localStorage.getItem('active_nav_tab');
+    return savedTab === 'home' || savedTab === 'projects' || savedTab === 'about' || savedTab === 'contact'
+      ? savedTab
+      : 'home';
+  });
   const [activeProjectTab, setActiveProjectTab] = useState<ProjectCategory>('all');
   const [selectedTechTags, setSelectedTechTags] = useState<TechTag[]>([]);
   const [imageError, setImageError] = useState(false);
@@ -137,6 +150,10 @@ function App() {
     return saved ? parseInt(saved, 10) : 0;
   });
   const { theme, toggleTheme } = useTheme();
+  const scrollProgress =
+    typeof document === 'undefined'
+      ? 0
+      : Math.min(scrollY / Math.max(document.documentElement.scrollHeight - window.innerHeight, 1), 1);
 
   const handleDownload = () => {
     const newCount = downloadCount + 1;
@@ -157,6 +174,10 @@ function App() {
       }, 500);
     }, 50);
   };
+
+  useEffect(() => {
+    localStorage.setItem('active_nav_tab', activeNavTab);
+  }, [activeNavTab]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -250,10 +271,13 @@ function App() {
         <CommandPalette
           techTags={allTechTags}
           selectedTechTags={selectedTechTags}
+          onNavigate={handleNavClick}
           onSelectCategory={setActiveProjectTab}
           onToggleTechTag={toggleTechTag}
           onClearTechTags={() => setSelectedTechTags([])}
         />
+
+        <div className="scroll-progress fixed left-0 top-0 z-[90] h-1 bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400" style={{ width: `${scrollProgress * 100}%` }} aria-hidden="true" />
         
         {/* Theme Toggle Button */}
         <button
@@ -358,7 +382,7 @@ function App() {
                       Explore Ecosystems
                     </button>
                     <a
-                      href="/resume/Marjames_Cayube_RESUME.pdf"
+                      href={resumePath}
                       download="Marjames_Cayube_RESUME.pdf"
                       onClick={handleDownload}
                       className="btn-active-scale inline-flex items-center gap-2 px-6 py-3.5 border border-white/10 bg-white/5 hover:bg-white/10 font-medium rounded-xl transition-all duration-300 text-white hover:border-white/20 hover:translate-y-[-2px]"
@@ -444,6 +468,16 @@ function App() {
                     Clear filters
                   </button>
                 )}
+              </div>
+
+              <div className="motion-reveal reveal-rise grid grid-cols-2 lg:grid-cols-4 gap-3 mt-6" style={revealDelay(120)}>
+                {projectSummaries.map((item) => (
+                  <div key={item.label} className="insight-card rounded-2xl border border-white/5 bg-black/30 p-4 backdrop-blur-xl">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500">{item.label}</p>
+                    <p className="mt-2 text-2xl font-extrabold text-white">{item.value}</p>
+                    <p className="mt-1 text-xs text-slate-400">{item.detail}</p>
+                  </div>
+                ))}
               </div>
 
               <div className="flex flex-col gap-10 w-full mt-6">
@@ -885,17 +919,19 @@ function App() {
                 <div className="p-8 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-2xl">
                   <h3 className="text-2xl font-bold text-white mb-6">Send me a message</h3>
                   <form action="https://formspree.io/f/xgvorypq" method="POST" className="space-y-4">
+                    <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
+                    <input type="hidden" name="_subject" value="Portfolio inquiry from marjames.dev" />
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">Name</label>
-                      <input type="text" id="name" name="name" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all" />
+                      <input type="text" id="name" name="name" required minLength={2} maxLength={80} autoComplete="name" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all" />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email</label>
-                      <input type="email" id="email" name="email" required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all" />
+                      <input type="email" id="email" name="email" required maxLength={120} autoComplete="email" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all" />
                     </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
-                      <textarea id="message" name="message" rows={5} required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all resize-none"></textarea>
+                      <textarea id="message" name="message" rows={5} required minLength={10} maxLength={1200} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500 focus:outline-none transition-all resize-none"></textarea>
                     </div>
                     <button type="submit" className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium rounded-xl transition-all duration-300 btn-active-scale">
                       Send Message →
@@ -912,7 +948,7 @@ function App() {
                 </p>
                 <div className="flex justify-center gap-4 mt-6 flex-wrap">
                   <a href="mailto:jamescayube7@gmail.com" className="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-xl font-medium transition-all duration-300 btn-active-scale">📧 Send an Email</a>
-                  <a href="/resume/Marjames_Cayube_RESUME.pdf" download="Marjames_Cayube_RESUME.pdf" onClick={handleDownload} className="px-6 py-3 border border-white/20 hover:bg-white/10 rounded-xl transition-all duration-300 btn-active-scale inline-flex items-center gap-2">
+                  <a href={resumePath} download="Marjames_Cayube_RESUME.pdf" onClick={handleDownload} className="px-6 py-3 border border-white/20 hover:bg-white/10 rounded-xl transition-all duration-300 btn-active-scale inline-flex items-center gap-2">
                     <DownloadIcon /> Download CV
                   </a>
                   <a href="https://cal.com/marjames" target="_blank" rel="noopener noreferrer" className="px-6 py-3 border border-white/20 hover:bg-white/10 rounded-xl transition-all duration-300 btn-active-scale">📅 Schedule a Call</a>

@@ -65,6 +65,17 @@ body {
   transform: scale(0.96);
 }
 
+*:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.72);
+  outline-offset: 3px;
+}
+
+.scroll-progress {
+  transform-origin: left center;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.28);
+  transition: width 120ms linear;
+}
+
 :root[data-theme="light"] .site-shell .text-white,
 :root[data-theme="light"] .modal-panel .text-white {
   color: var(--text-primary) !important;
@@ -252,6 +263,39 @@ body {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22), 0 0 32px rgba(34, 211, 238, 0.08);
 }
 
+.insight-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.insight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), transparent 42%, rgba(16, 185, 129, 0.08));
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.insight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.insight-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 211, 238, 0.22);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+}
+
+.insight-card:hover::after {
+  opacity: 1;
+}
+
 .project-card {
   transition:
     border-color 480ms ease,
@@ -382,6 +426,23 @@ body {
 .theme-toggle,
 .command-trigger {
   color: var(--text-muted) !important;
+}
+
+input,
+textarea,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea {
+  caret-color: rgb(34, 211, 238);
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
 }
 
 .theme-toggle-icon,
@@ -540,6 +601,12 @@ body {
 }
 
 @media (max-width: 640px) {
+  .site-shell {
+    gap: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .motion-reveal,
   .motion-reveal.is-visible,
   .portrait-float,
@@ -566,6 +633,18 @@ body {
 
   .carousel-nav:last-of-type {
     right: calc(50% - 58px);
+  }
+
+  .theme-toggle {
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .command-content {
+    top: 10vh;
+    width: min(100vw - 20px, 640px);
+    border-radius: 16px;
   }
 }
 

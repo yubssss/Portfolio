@@ -5,18 +5,16 @@ import { useTheme } from '../context/ThemeContext';
 interface CommandPaletteProps {
   techTags: string[];
   selectedTechTags: string[];
+  onNavigate: (tab: 'home' | 'projects' | 'about' | 'contact') => void;
   onSelectCategory: (category: 'all' | 'mobile' | 'web') => void;
   onToggleTechTag: (tag: string) => void;
   onClearTechTags: () => void;
 }
 
-const scrollToSection = (selector: string) => {
-  document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
-
 export const CommandPalette = ({
   techTags,
   selectedTechTags,
+  onNavigate,
   onSelectCategory,
   onToggleTechTag,
   onClearTechTags,
@@ -73,7 +71,7 @@ export const CommandPalette = ({
             <Command.Item
               value="Go to hero profile introduction"
               keywords={['home', 'profile', 'intro']}
-              onSelect={() => runCommand(() => window.scrollTo({ top: 0, behavior: 'smooth' }))}
+              onSelect={() => runCommand(() => onNavigate('home'))}
             >
               <span>Go to Intro</span>
               <small>Home</small>
@@ -81,7 +79,7 @@ export const CommandPalette = ({
             <Command.Item
               value="Go to projects"
               keywords={['work', 'portfolio', 'case studies']}
-              onSelect={() => runCommand(() => scrollToSection('#projects'))}
+              onSelect={() => runCommand(() => onNavigate('projects'))}
             >
               <span>Go to Projects</span>
               <small>#projects</small>
@@ -89,7 +87,10 @@ export const CommandPalette = ({
             <Command.Item
               value="Download resume CV"
               keywords={['resume', 'cv', 'download']}
-              onSelect={() => runCommand(() => window.open('/resume/Marjames_Cayube_RESUME.pdf', '_blank'))}
+              onSelect={() => runCommand(() => {
+                const resumeWindow = window.open('/Portfolio/resume/Marjames_Cayube_RESUME.pdf', '_blank', 'noopener,noreferrer');
+                if (resumeWindow) resumeWindow.opener = null;
+              })}
             >
               <span>Open Resume</span>
               <small>PDF</small>
@@ -113,7 +114,10 @@ export const CommandPalette = ({
                 key={category}
                 value={`Show ${category} projects`}
                 keywords={['filter', category, 'projects']}
-                onSelect={() => runCommand(() => onSelectCategory(category))}
+                onSelect={() => runCommand(() => {
+                  onNavigate('projects');
+                  onSelectCategory(category);
+                })}
               >
                 <span>Show {category === 'all' ? 'All' : category[0].toUpperCase() + category.slice(1)} Projects</span>
                 <small>Filter</small>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { ScreenItem } from '../data/mockupData';
 
 interface GalleryModalProps {
@@ -16,16 +16,37 @@ export const GalleryModal = ({
   currentIndex,
   setCurrentIndex,
 }: GalleryModalProps) => {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'ArrowLeft') {
+        setCurrentIndex((prev) => (prev === 0 ? screens.length - 1 : prev - 1));
+      }
+      if (event.key === 'ArrowRight') {
+        setCurrentIndex((prev) => (prev === screens.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, onClose, screens.length, setCurrentIndex]);
+
   if (!isOpen || !screens || screens.length === 0) return null;
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl">
+    <div className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
       <div className="absolute inset-0 cursor-pointer" onClick={onClose}></div>
 
       <div className="modal-panel relative w-full max-w-lg bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden shadow-2xl z-10 p-6 flex flex-col items-center gap-4">
         <div className="w-full flex justify-between items-center border-b border-white/5 pb-3">
           <div className="text-left">
-            <h4 className="text-sm font-bold text-white font-sans">
+            <h4 id="gallery-title" className="text-sm font-bold text-white font-sans">
               {screens[currentIndex]?.title || 'Untitled Screen'}
             </h4>
             <p className="text-[10px] font-mono text-slate-500">
@@ -46,6 +67,8 @@ export const GalleryModal = ({
             key={screens[currentIndex]?.src}
             src={screens[currentIndex]?.src || ''}
             alt={screens[currentIndex]?.title || 'Screen Preview'}
+            loading="lazy"
+            decoding="async"
             className="modal-image max-h-[55vh] object-contain rounded-xl shadow-md border border-white/5"
           />
 

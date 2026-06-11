@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { MockupItem } from '../data/mockupData';
 
 interface MockupCarouselProps {
@@ -8,6 +8,8 @@ interface MockupCarouselProps {
 
 export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mobile' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const hasSlides = data.length > 0;
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev === data.length - 1 ? 0 : prev + 1));
@@ -16,6 +18,23 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? data.length - 1 : prev - 1));
   };
+
+  useEffect(() => {
+    if (!hasSlides || isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timer = window.setInterval(() => {
+      setCurrentIndex((prev) => (prev === data.length - 1 ? 0 : prev + 1));
+    }, type === 'web' ? 6200 : 5200);
+    return () => window.clearInterval(timer);
+  }, [data.length, hasSlides, isPaused, type]);
+
+  if (!hasSlides) {
+    return (
+      <div className="w-full rounded-2xl border border-white/10 bg-black/30 p-6 text-center text-sm text-slate-400">
+        No previews available.
+      </div>
+    );
+  }
 
   const updateFrameMotion = (event: React.PointerEvent<HTMLDivElement>) => {
     if (type !== 'mobile') return; // Only apply 3D tilt for mobile
@@ -36,7 +55,14 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
   // Web/Browser mockup renderer
   if (type === 'web') {
     return (
-      <div className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6">
+      <div
+        className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6"
+        onPointerEnter={() => setIsPaused(true)}
+        onPointerLeave={() => setIsPaused(false)}
+        onFocus={() => setIsPaused(true)}
+        onBlur={() => setIsPaused(false)}
+        aria-live="polite"
+      >
         {/* Browser Frame Container */}
         <div className="browser-frame relative w-full max-w-4xl mx-auto">
           {/* Browser Chrome */}
@@ -63,6 +89,8 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
                 key={data[currentIndex].id}
                 src={data[currentIndex].imageUrl} 
                 alt={data[currentIndex].title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
               
@@ -107,7 +135,14 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
 
   // Mobile mockup renderer (original)
   return (
-    <div className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6">
+    <div
+      className="carousel-shell w-full min-w-0 flex flex-col items-center justify-center py-4 sm:py-6"
+      onPointerEnter={() => setIsPaused(true)}
+      onPointerLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
+      aria-live="polite"
+    >
       {/* Phone Mockup Frame Container */}
       <div
         className="phone-frame relative mx-auto border-gray-800 bg-gray-800 border-[10px] sm:border-[14px] rounded-[2rem] sm:rounded-[2.5rem] h-[500px] w-[250px] max-h-[68vh] max-w-[calc(100vw-4rem)] sm:h-[600px] sm:w-[300px] shadow-xl"
@@ -126,6 +161,8 @@ export const MockupCarousel: React.FC<MockupCarouselProps> = ({ data, type = 'mo
             key={data[currentIndex].id}
             src={data[currentIndex].imageUrl} 
             alt={data[currentIndex].title}
+            loading="lazy"
+            decoding="async"
             className="carousel-screen-image w-full h-full object-cover"
           />
         </div>
