@@ -47,7 +47,7 @@ const PROJECTS: Project[] = [
   {
     id: "ecotrack-mobile",
     categories: ["mobile"],
-    tags: ["React","TypeScript","Vite","Supabase"],
+    tags: ["React","React Native","TypeScript","Supabase"],
     badge: "Integrated Full-Stack Ecosystem",
     badgeColor: "indigo",
     meta: "Capstone Core System",
@@ -75,7 +75,7 @@ const PROJECTS: Project[] = [
   {
     id: "ai-scanner",
     categories: ["mobile"],
-    tags: ["React Native","TensorFlow Lite","Google ML Kit","AsyncStorage"],
+    tags: ["Flutter","Dart","TensorFlow Lite","Google ML Kit","AsyncStorage"],
     badge: "AI-Powered Recipe Intelligence",
     badgeColor: "emerald",
     meta: "Full-Stack Developer",
