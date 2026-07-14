@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: process.env.VERCEL ? '/' : '/Portfolio/',
+  base: '/',  // Always root for Vercel
   build: {
     outDir: 'dist',
     sourcemap: true,

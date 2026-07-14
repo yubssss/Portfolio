@@ -39,6 +39,13 @@ export const CommandPalette = ({
     setOpen(false);
   };
 
+  // Helper function for resume path
+  const getResumePath = () => {
+    const isGitHubPages = typeof window !== 'undefined' && window.location.pathname.startsWith('/Portfolio/');
+    const base = isGitHubPages ? '/Portfolio/' : '/';
+    return `${base}resume/Marjames_Cayube_RESUME.pdf`;
+  };
+
   return (
     <>
       <button
@@ -88,7 +95,7 @@ export const CommandPalette = ({
               value="Download resume CV"
               keywords={['resume', 'cv', 'download']}
               onSelect={() => runCommand(() => {
-                const resumeWindow = window.open('/Portfolio/resume/Marjames_Cayube_RESUME.pdf', '_blank', 'noopener,noreferrer');
+                const resumeWindow = window.open(getResumePath(), '_blank', 'noopener,noreferrer');
                 if (resumeWindow) resumeWindow.opener = null;
               })}
             >

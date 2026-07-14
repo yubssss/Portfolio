@@ -13,12 +13,10 @@ export interface ScreenItem {
 // Helper function to get the correct asset path
 // This works for both GitHub Pages and Vercel
 const getAssetPath = (path: string): string => {
-  // Remove /Portfolio/ prefix if it exists
-  const cleanPath = path.replace(/^\/Portfolio\//, '');
-  // Remove 'public/' prefix if it exists (since public folder is served from root)
-  const finalPath = cleanPath.replace(/^public\//, '');
-  // Use import.meta.env.BASE_URL which is set by Vite
-  return `${import.meta.env.BASE_URL}${finalPath}`;
+  // Check if we're on GitHub Pages (has /Portfolio/ in URL)
+  const isGitHubPages = typeof window !== 'undefined' && window.location.pathname.startsWith('/Portfolio/');
+  const base = isGitHubPages ? '/Portfolio/' : '/';
+  return `${base}${path}`;
 };
 
 // ─── AI SCANNER (AI PANTRY SCANNER) ───────────────────────────────────────────
