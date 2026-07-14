@@ -15,9 +15,10 @@ export interface ScreenItem {
 const getAssetPath = (path: string): string => {
   // Remove /Portfolio/ prefix if it exists
   const cleanPath = path.replace(/^\/Portfolio\//, '');
+  // Remove 'public/' prefix if it exists (since public folder is served from root)
+  const finalPath = cleanPath.replace(/^public\//, '');
   // Use import.meta.env.BASE_URL which is set by Vite
-  // This will be '/Portfolio/' on GitHub Pages and '/' on Vercel
-  return `${import.meta.env.BASE_URL}${cleanPath}`;
+  return `${import.meta.env.BASE_URL}${finalPath}`;
 };
 
 // ─── AI SCANNER (AI PANTRY SCANNER) ───────────────────────────────────────────
