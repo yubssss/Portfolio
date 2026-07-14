@@ -9,8 +9,11 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: process.env.VERCEL ? '/' : '/Portfolio/',
-  // This ensures:
-  // - On Vercel: base is '/' (root)
-  // - On GitHub Pages: base is '/Portfolio/'
-  // Using environment variable to detect the platform
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+  server: {
+    port: 3000,
+  },
 })
