@@ -1,5 +1,11 @@
 import { useEffect, useState, useRef, useCallback, type ReactNode } from "react";
+const isGitHubPages = () =>
+  typeof window !== "undefined" && window.location.pathname.startsWith("/Portfolio/");
 
+const assetPath = (path: string) => {
+  const base = isGitHubPages() ? "/Portfolio/" : "/";
+  return `${base}${path}`.replace(/\/{2,}/g, "/");
+};
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 type NavTab = "home" | "projects" | "about" | "contact";
 type ProjectCategory = "all" | "mobile" | "web";
@@ -34,8 +40,8 @@ interface Summary {
 }
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
-const RESUME_PATH = "/Portfolio/resume/Marjames_Cayube_RESUME.pdf";
-const PROFILE_IMG = "/Portfolio/assets/ecotrack/profile.jpg";
+const RESUME_PATH = assetPath("/resume/Marjames_Cayube_RESUME.pdf");
+const PROFILE_IMG = assetPath("/assets/ecotrack/profile.jpg");
 
 const TECH_TAGS: string[] = [
   "Flutter","Dart","React","React Native","TypeScript",
@@ -182,18 +188,18 @@ function useInView(threshold = 0.15): [React.RefObject<HTMLDivElement | null>, b
 }
 
 function getGallerySrc(galleryKey: string, index: number): string {
-  if (galleryKey === "ojt") return "/Portfolio/assets/ojt/ojt.jpg";
-  if (galleryKey === "ecoweb") return `/Portfolio/assets/ecoweb/eco${index + 1}.png`;
+  if (galleryKey === "ojt") return assetPath("assets/ojt/ojt.jpg");
+  if (galleryKey === "ecoweb") return assetPath(`assets/ecoweb/eco${index + 1}.png`);
   if (galleryKey === "ecotrack") {
     const names = [
       "welcome-login-portal","service-portal-dashboard","active-tickets-console",
       "resolved-ticket-history","borrow-equipment","return-assets",
       "notifications-hub","profile-settings",
     ];
-    return `/Portfolio/assets/ecotrack/${names[index]}.jpg`;
+    return assetPath(`assets/ecotrack/${names[index]}.jpg`);
   }
-  if (galleryKey === "furniview") return `/Portfolio/assets/furni/furni-${index + 1}.jpg`;
-  return `/Portfolio/assets/${galleryKey}/${index + 1}.jpg`;
+  if (galleryKey === "furniview") return assetPath(`assets/furni/furni-${index + 1}.jpg`);
+  return assetPath(`assets/${galleryKey}/${index + 1}.jpg`);
 }
 
 // ─── ANIMATION WRAPPER ────────────────────────────────────────────────────────
@@ -530,7 +536,7 @@ function WebCarousel({ count }: { count: number }) {
         <div className="relative bg-black">
           <img
             key={idx}
-            src={`/Portfolio/assets/ecoweb/eco${idx + 1}.png`}
+src={assetPath(`assets/ecoweb/eco${idx + 1}.png`)}
             alt={`Dashboard screen ${idx + 1}`}
             loading="lazy"
             decoding="async"
